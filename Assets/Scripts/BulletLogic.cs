@@ -15,7 +15,7 @@ public class BulletLogic : MonoBehaviour
         _rb2D.velocity = Vector2.up * (bulletSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
