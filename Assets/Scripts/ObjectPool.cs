@@ -1,43 +1,98 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool Instance;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private ReturnToPool prefab;
 
-    private readonly List<GameObject> _pooledObjects = new List<GameObject>();
-    private float _amountToPool = 20.00f;
-    
-    private void Awake()
+    [Space(10)] [SerializeField] private Transform container;
+    [SerializeField] private int minCapacity;
+    [SerializeField] private int maxCapacity;
+    [Space(10)] [SerializeField] private bool isAutoExpandable;
+
+    private List<ReturnToPool> _pool;
+
+    private void OnValidate()
     {
-        if (Instance == null)
+        if (isAutoExpandable)
         {
-            Instance = this;
+            maxCapacity = int.MaxValue;
         }
     }
 
     private void Start()
     {
-        for (var i = 0; i < _amountToPool; i++)
+        CreatePool();
+    }
+
+    private void CreatePool()
+    {
+        _pool = new List<ReturnToPool>(minCapacity);
+
+        for (var i = 0; i < minCapacity; i++)
         {
-            var obj = Instantiate(bulletPrefab);
-            obj.SetActive(false);
-            
-            _pooledObjects.Add(obj);
+            CreateElement();
         }
     }
 
-    public GameObject GetPooledObject()
+    private ReturnToPool CreateElement(bool isActiveByDefault = false)
     {
-        foreach (var t in _pooledObjects)
+        var createdObject = Instantiate(prefab, container);
+        createdObject.gameObject.SetActive(isActiveByDefault);
+        
+        _pool.Add(createdObject);
+
+        return createdObject;
+    }
+
+    private bool TryGetElement(out ReturnToPool element)
+    {
+        foreach (var item in _pool)
         {
-            if (!t.activeInHierarchy)
+            if (!item.gameObject.activeInHierarchy)
             {
-                return t;
+                element = item;
+                item.gameObject.SetActive(true);
+                return true;
             }
         }
 
-        return null;
+        element = null;
+        return false;
+    }
+
+    public ReturnToPool GetFreeElement(Vector3 position, Quaternion rotation)
+    {
+        var element = GetFreeElement(position);
+        element.transform.rotation = rotation;
+        return element;
+    }
+
+    private ReturnToPool GetFreeElement(Vector3 position)
+    {
+        var element = GetFreeElement();
+        element.transform.position = position;
+        return element;
+    }
+
+    private ReturnToPool GetFreeElement()
+    {
+        if (TryGetElement(out var element))
+        {
+            return element;
+        }
+ 
+        if (isAutoExpandable)
+        {
+            return CreateElement(true);
+        }
+
+        if (_pool.Count < maxCapacity)
+        {
+            return CreateElement(true);
+        }
+
+        throw new Exception("The limit of pool has been reached");
     }
 }

@@ -33,8 +33,8 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Rotation",
-                    "type": "Value",
+                    "name": "MousePosition",
+                    "type": "PassThrough",
                     "id": "390c32c5-413b-45a6-b8c3-956ac6d4fc94",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -171,18 +171,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b8fbc2b2-b053-4238-8b0d-0334c7356135",
-                    "path": "<Joystick>/stick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
+                    "action": "MousePosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
