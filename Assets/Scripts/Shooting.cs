@@ -11,6 +11,7 @@ public class Shooting : MonoBehaviour
 
     private float _lastFired;
     private bool _isShooting;
+    private InputAction.CallbackContext _mouseContext;
     private Quaternion _quaternionRotation;
     [SerializeField] private float fireRate = 1.00f;
     [SerializeField] private Transform bulletStartingTransform;
@@ -29,7 +30,10 @@ public class Shooting : MonoBehaviour
         _inputBindings.Player.Fire.canceled += OnFireInput;
         _inputBindings.Player.Fire.performed += OnFireInput;
 
-        _inputBindings.Player.MousePosition.performed += ReadMouseInput;
+        _inputBindings.Player.MousePosition.performed += ctx =>
+        {
+            _mouseContext = ctx;
+        };
     }
 
     private void OnEnable()
@@ -42,14 +46,6 @@ public class Shooting : MonoBehaviour
         _inputBindings.Player.Disable();
     }
     
-    private void ReadMouseInput(InputAction.CallbackContext context)
-    {
-        var objPosition = (Vector2) bulletStartingTransform.position;
-        var mousePosition = (Vector2) mainCamera.ScreenToWorldPoint(context.ReadValue<Vector2>());
-        var direction = (mousePosition - objPosition).normalized;
-        RotateAim(direction);
-    }
-    
     private void RotateAim(Vector2 direction)
     {  
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -58,6 +54,11 @@ public class Shooting : MonoBehaviour
     
     private void Update()
     {
+        var objPosition = (Vector2) bulletStartingTransform.position;
+        var mousePosition = (Vector2) mainCamera.ScreenToWorldPoint(_mouseContext.ReadValue<Vector2>());
+        var direction = (mousePosition - objPosition).normalized;
+        RotateAim(direction);
+        
         bulletStartingTransform.rotation = _quaternionRotation;
         
         if (_isShooting)
