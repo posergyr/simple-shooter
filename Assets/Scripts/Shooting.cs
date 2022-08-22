@@ -12,8 +12,8 @@ public class Shooting : MonoBehaviour
     private float _lastFired;
     private bool _isShooting;
     private Quaternion _quaternionRotation;
-    [SerializeField] private float fireRate = 10.00f;
-    [SerializeField] private Transform bulletStartingPosition;
+    [SerializeField] private float fireRate = 1.00f;
+    [SerializeField] private Transform bulletStartingTransform;
     [SerializeField] private Camera mainCamera;
 
     private void Start()
@@ -44,29 +44,34 @@ public class Shooting : MonoBehaviour
     
     private void ReadMouseInput(InputAction.CallbackContext context)
     {
-        var mousePosition = context.ReadValue<Vector2>();
-        var objectPosition = (Vector2) mainCamera.ScreenToWorldPoint(transform.position);
-        var direction = (mousePosition - objectPosition).normalized;
+        var objPosition = (Vector2) bulletStartingTransform.position;
+        var mousePosition = (Vector2) mainCamera.ScreenToWorldPoint(context.ReadValue<Vector2>());
+        var direction = (mousePosition - objPosition).normalized;
         RotateAim(direction);
     }
     
     private void RotateAim(Vector2 direction)
     {  
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        _quaternionRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        _quaternionRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90.00f));
     }
     
-    private void Shoot()
+    private void Update()
     {
-        if (Time.time - _lastFired > 1 / fireRate)
+        bulletStartingTransform.rotation = _quaternionRotation;
+        
+        if (_isShooting)
         {
-            _lastFired = Time.time;
-            _objectPool.GetFreeElement(bulletStartingPosition.position, _quaternionRotation);
+            if (Time.time - _lastFired > 1 / fireRate)
+            {
+                _lastFired = Time.time;
+                _objectPool.GetFreeElement(bulletStartingTransform.position, _quaternionRotation);
+            }
         }
     }
 
     private void OnFireInput(InputAction.CallbackContext ctx)
     {
-        Shoot();
+        _isShooting = ctx.ReadValueAsButton();
     }
 }

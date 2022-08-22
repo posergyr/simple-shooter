@@ -341,6 +341,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1430642715 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1537469069510013883, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4941575871816821448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1430642716 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2670521627486348056, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4941575871816821448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1430642720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430642715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57050234016d146cfbaf827be925f4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 10
+  bulletStartingTransform: {fileID: 1430642716}
+  mainCamera: {fileID: 519420031}
+--- !u!114 &1430642721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430642715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f371f855299df401797cffd98f6c841f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 9153182187370903158, guid: bc09a45c5de434135bafefb8e3b9be92, type: 3}
+  container: {fileID: 0}
+  minCapacity: 10
+  maxCapacity: 200
+  isAutoExpandable: 0
 --- !u!1001 &4941575871816821448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -348,12 +392,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1756543810, guid: f67f38f9554a24b7384e4cb39c0cd6f0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756543810, guid: f67f38f9554a24b7384e4cb39c0cd6f0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756543810, guid: f67f38f9554a24b7384e4cb39c0cd6f0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1756543810, guid: f67f38f9554a24b7384e4cb39c0cd6f0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2281315413830952378, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
         type: 3}
       propertyPath: prefab
       value: 
-      objectReference: {fileID: 4072121402444488295, guid: bc09a45c5de434135bafefb8e3b9be92,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2281315413830952378, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
         type: 3}
       propertyPath: maxCapacity
@@ -363,6 +422,21 @@ PrefabInstance:
         type: 3}
       propertyPath: minCapacity
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2670521627486348056, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 15.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 2670521627486348056, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 15.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 2670521627486348056, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 15.66
       objectReference: {fileID: 0}
     - target: {fileID: 4941575871503484821, guid: f67f38f9554a24b7384e4cb39c0cd6f0,
         type: 3}
@@ -429,5 +503,7 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420031}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8064954795666365887, guid: f67f38f9554a24b7384e4cb39c0cd6f0, type: 3}
+    - {fileID: 7708359788524759355, guid: f67f38f9554a24b7384e4cb39c0cd6f0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f67f38f9554a24b7384e4cb39c0cd6f0, type: 3}

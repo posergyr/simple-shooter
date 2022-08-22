@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,13 +6,15 @@ using UnityEngine;
 public class BulletLogic : MonoBehaviour
 {
     [SerializeField] private float bulletSpeed = 250.00f;
-    
+
+    private Transform _transform;
     private Rigidbody2D _rb2D;
     private ReturnToPool _objectReturnToPool;
 
     private void Start()
     {
         _rb2D = GetComponent<Rigidbody2D>();
+        _transform = GetComponent<Transform>();
         _rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         _objectReturnToPool = GetComponent<ReturnToPool>();
     }
@@ -25,7 +26,7 @@ public class BulletLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb2D.velocity = Vector2.right * (bulletSpeed * Time.deltaTime);
+        _rb2D.velocity = _transform.rotation * Vector2.up * (bulletSpeed * Time.deltaTime);
     }
 
     private IEnumerator Destroy()
