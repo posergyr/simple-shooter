@@ -13,7 +13,8 @@ public class Shooting : MonoBehaviour
     private bool _isShooting;
     private InputAction.CallbackContext _mouseContext;
     private Quaternion _quaternionRotation;
-    [SerializeField] private float fireRate = 1.00f;
+    [SerializeField] private float fireRate = 10.00f;
+    [SerializeField] private float fireDispersion = 5.00f;
     [SerializeField] private Transform bulletStartingTransform;
     [SerializeField] private Camera mainCamera;
 
@@ -49,7 +50,7 @@ public class Shooting : MonoBehaviour
     private void RotateAim(Vector2 direction)
     {  
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        _quaternionRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90.00f));
+        _quaternionRotation = Quaternion.Euler(new Vector3(0, 0, angle + Random.Range(-fireDispersion, fireDispersion) - 90.00f));
     }
     
     private void Update()
